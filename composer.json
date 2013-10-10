@@ -1,0 +1,47 @@
+{
+    "name": "leaphly/cart-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony CartBundle",
+    "keywords": ["Cart management"],
+    "homepage": "http://leaphly.org",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Giulio De Donato",
+            "email": "liuggio@gmail.com"
+        },
+        {
+            "name": "Simone Di Maulo",
+            "email": "toretto460@gmail.com"
+        },
+        {
+            "name": "Claudio D'alicando",
+            "email": "claudio.dalicandro@gmail.com"
+        },
+        {
+            "name": "Leaphly Community",
+            "homepage": "https://github.com/leaphly/CartBundle/contributors"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/framework-bundle": "~2.1",
+        "pugx/godfather": "dev-master",
+        "yohang/finite": "dev-master"
+    },
+    "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
+        "phpunit/phpunit": "3.7.*",
+        "liip/functional-test-bundle":"dev-master"
+    },
+    "autoload": {
+        "psr-0": { "LPH\\CartBundle": "" }
+    },
+    "target-dir": "LPH/UserBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
+    }
+}
