@@ -14,7 +14,7 @@ This software provides the tools and guidelines for building decoupled, high-qua
 Installation
 ------------
 
-All the installation instructions are located in  the documentation on the website [http://leaphly.org](http://leaphly.org])
+All the installation instructions are located in  the documentation on the website [http://leaphly.org](http://leaphly.org)
 
 License
 -------
