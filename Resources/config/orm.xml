@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="leaphly_cart.cart_manager.default" class="Leaphly\CartBundle\Doctrine\CartManager" public="false">
+            <argument type="service" id="leaphly_cart.entity_manager" />
+            <argument>%leaphly_cart.model.cart.class%</argument>
+        </service>
+
+        <service id="leaphly_cart.entity_manager" factory-service="doctrine" factory-method="getManager" class="Doctrine\ORM\EntityManager" public="false">
+            <argument>%leaphly_cart.model_manager_name%</argument>
+        </service>
+
+    </services>
+</container>

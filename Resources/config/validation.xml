@@ -1,0 +1,91 @@
+<?xml version="1.0" ?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+        http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+
+    <class name="Leaphly\CartBundle\Model\Item">
+        <property name="name">
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="minMessage">leaphly_cart.item.short</option>
+                <option name="max">255</option>
+                <option name="maxMessage">leaphly_cart.item.long</option>
+            </constraint>
+        </property>
+    </class>
+
+    <class name="Leaphly\CartBundle\Model\Cart">
+
+        <property name="expiresAt">
+            <constraint name="DateTime">
+                <option name="groups">
+                    <value>Complete</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="createdAt">
+            <constraint name="DateTime">
+                <option name="groups">
+                    <value>Complete</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="updatedAt">
+            <constraint name="DateTime">
+                <option name="groups">
+                    <value>Complete</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="identifier">
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="minMessage">no</option>
+                <option name="max">255</option>
+                <option name="maxMessage">no</option>
+                <option name="groups">
+                    <value>Complete</value>
+                </option>
+            </constraint>
+
+            <constraint name="Type">
+                <option name="type">string</option>
+                <option name="message">The value {{ value }} is not a valid {{ type }}.</option>
+                <option name="groups">
+                    <value>Complete</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="price">
+            <constraint name="Range">
+                <option name="min">0</option>
+                <option name="minMessage">leaphly_cart.cart.price.min</option>
+                <option name="groups">
+                    <value>Complete</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="finalPrice">
+            <constraint name="Range">
+                <option name="min">0</option>
+                <option name="minMessage">leaphly_cart.cart.price.min</option>
+                <option name="groups">
+                    <value>Complete</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="currency">
+            <constraint name="Currency" />
+        </property>
+
+    </class>
+
+</constraint-mapping>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        <div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%identifier%': app.cart.identifier}, 'LeaphlyCartBundle') }} |
+                <a href="{{ path('leaphly_cart_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'LeaphlyCartBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('leaphly_cart_security_login') }}">{{ 'layout.login'|trans({}, 'LeaphlyCartBundle') }}</a>
+            {% endif %}
+        </div>
+
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="flash-{{ type }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <div>
+            {% block leaphly_cart_content %}
+            {% endblock leaphly_cart_content %}
+        </div>
+    </body>
+</html>

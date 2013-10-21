@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="leaphly_cart.cart.controller.class">Leaphly\CartBundle\Controller\CartsController</parameter>
+        <parameter key="leaphly_cart.item.controller.class">Leaphly\CartBundle\Controller\CartItemsController</parameter>
+        <parameter key="leaphly_cart.item.handler.class">Leaphly\CartBundle\Handler\CartItemHandler</parameter>
+        <parameter key="leaphly_cart.cart.handler.class">Leaphly\CartBundle\Handler\CartHandler</parameter>
+    </parameters>
+
+</container>

@@ -1,7 +1,7 @@
 {
     "name": "leaphly/cart-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony CartBundle",
+    "description": "Cart Bundle",
     "keywords": ["Cart management"],
     "homepage": "http://leaphly.org",
     "license": "MIT",
@@ -9,14 +9,6 @@
         {
             "name": "Giulio De Donato",
             "email": "liuggio@gmail.com"
-        },
-        {
-            "name": "Simone Di Maulo",
-            "email": "toretto460@gmail.com"
-        },
-        {
-            "name": "Claudio D'alicando",
-            "email": "claudio.dalicandro@gmail.com"
         },
         {
             "name": "Leaphly Community",
@@ -27,6 +19,8 @@
     "require": {
         "php": ">=5.3.2",
         "symfony/framework-bundle": "~2.1",
+        "symfony/form": "~2.1",
+        "jms/serializer-bundle": "dev-master",
         "pugx/godfather": "dev-master",
         "yohang/finite": "dev-master"
     },
@@ -35,10 +29,16 @@
         "phpunit/phpunit": "3.7.*",
         "liip/functional-test-bundle":"dev-master"
     },
-    "autoload": {
-        "psr-0": { "LPH\\CartBundle": "" }
+    "suggest": {
+        "doctrine/doctrine-fixtures-bundle": "Required when using the fixture loading functionality",
+        "doctrine/mongodb-odm-bundle": "Required when using ODM as db-driver",
+        "doctrine/doctrine-bundle": "Required when using ORM as db-driver",
+        "friendsofsymfony/rest-bundle": "Required if you want to use the Rest Controller"
     },
-    "target-dir": "LPH/UserBundle",
+    "autoload": {
+        "psr-0": { "Leaphly\\CartBundle": "" }
+    },
+    "target-dir": "Leaphly/CartBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "0.1.x-dev"

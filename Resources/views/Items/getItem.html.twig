@@ -1,0 +1,25 @@
+<article class="item" data-uid="{{ item.id }}">
+            <span class="item_details item_name">
+                <strong>{{ "leaply.item.name" | trans }}:</strong> {{ item.name }}
+            </span>
+    {% if item.price >= 0.01 %}
+        <span class="item_details item_price{% if item.price > item.finalPrice %} discounted{% endif %}">
+                    <strong>{{ "leaply.item.price" | trans }}:</strong> {{ item.price ~ " " ~ item.currency }}
+                </span>
+        {% if item.price > item.finalPrice %}
+            <span class="item_details item_finalPrice">
+                    <strong>{{ "leaply.item.finalPrice" | trans }}:</strong>
+                {{ item.finalPrice ~ " " ~ item.currency }}
+                </span>
+        {% endif %}
+    {% endif %}
+    <nav class="item_actions">
+        <ul>
+            <li class="item_action">
+                <a href="{# {{ path("") }} #}" class="remove_item_action">
+                    {{ "leaply.item.delete_item" | trans }}
+                </a>
+            </li>
+        </ul>
+    </nav>
+</article>

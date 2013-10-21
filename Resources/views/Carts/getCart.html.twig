@@ -1,0 +1,29 @@
+<section class="cart" data-uid="{{ cart.id }}">
+    {% for item in cart.items %}
+    {{ include("LeaphlyCartBundle:Items:getItem.html.twig", { "item": item }) }}
+    {% else %}
+    <span class="empty_cart_message">{{ "leaply.cart.empty" | trans }}</span>
+    {% endfor %}
+    {% if cart.price >= 0.01 %}
+    <span class="cart_details cart_price{% if cart.price > cart.finalPrice %} discounted{% endif %}">
+        <strong>{{ "leaply.cart.price" | trans }}:</strong> {{ cart.price ~ " " ~ cart.currency }}
+    </span>
+    {% if cart.price > cart.finalPrice %}
+    <span class="cart_details cart_final_price">
+        <strong>{{ "leaply.cart.finalPrice" | trans }}:</strong> {{ cart.finalPrice ~ " " ~ cart.currency }}
+    </span>
+    {% endif %}
+    {% endif %}
+    {# todo: I don"t know if we need to say something about the state... -#}
+    <nav class="cart_actions">
+        <ul>
+            {% if cart.items|length > 0 %}
+            <li class="cart_action">
+                <a href="{# {{ path("") }} #}" class="empty_cart_action">
+                    {{ "leaply.cart.empty_cart" | trans }}
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</section>

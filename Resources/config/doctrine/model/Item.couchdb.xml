@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping>
+    <mapped-superclass name="Leaphly\CartBundle\Model\Item" indexed="true">
+
+        <field name="name" fieldName="name" type="string" indexed="true" />
+
+    </mapped-superclass>
+
+</doctrine-mapping>
