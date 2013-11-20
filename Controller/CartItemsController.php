@@ -42,6 +42,7 @@ class CartItemsController extends BaseController
             'api_1_get_cart', array('cart_id' => $cart->getId(), '_format' => $this->container->get('request')->get('_format') ),
             true)
         );
+
         try{
             $this->itemHandler
                 ->postItem(

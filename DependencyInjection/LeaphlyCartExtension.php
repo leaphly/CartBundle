@@ -75,6 +75,9 @@ class LeaphlyCartExtension extends Extension
         $itemControllerClass = $container->getParameter('leaphly_cart.item.controller.class');
         $itemHandlerClass = $container->getParameter('leaphly_cart.item.handler.class');
         $cartFormFactoryHandlerClass = $container->getParameter('leaphly_cart.cart.form.factory.class');
+        $defaultCartHandler = 'leaphly_cart.cart.handler';
+        $defaultCartItemHandler = 'leaphly_cart.cart_item.handler';
+
 
         if (isset($config['roles'])) {
             foreach ($config['roles'] as $roleName => $role) {
@@ -131,6 +134,16 @@ class LeaphlyCartExtension extends Extension
                 } else {
                     $container->setAlias($controllerCartItemId, $role['controller']['item']);
                 }
+
+                // setting the default cart hanlder
+                if (!$container->hasAlias($defaultCartHandler) || $role['is_default']) {
+                    $container->setAlias($defaultCartHandler, $cartHandlerId);
+                }
+                // setting the default cart hanlder
+                if (!$container->hasAlias($defaultCartItemHandler) || $role['is_default']) {
+                    $container->setAlias($defaultCartItemHandler, $cartItemHandlerId);
+                }
+
             }
         }
     }
