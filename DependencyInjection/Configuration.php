@@ -12,10 +12,11 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  * This information is solely responsible for how the different configuration
  * sections are normalized, and merged.
  *
- * @author Christophe Coevoet <stof@notk.org>
+ * @author Giulio De Donato <liuggio@gmail.com>
  */
 class Configuration implements ConfigurationInterface
 {
+    static $supportedDrivers = array('orm', 'mongodb');
     /**
      * Generates the configuration tree.
      *
@@ -44,14 +45,12 @@ class Configuration implements ConfigurationInterface
 
     private function addDbDriver(ArrayNodeDefinition $node)
     {
-        $supportedDrivers = array('orm', 'mongodb');
-
         $node
             ->children()
                 ->scalarNode('db_driver')
                     ->validate()
-                        ->ifNotInArray($supportedDrivers)
-                        ->thenInvalid('The driver %s is not supported. Please choose one of '.json_encode($supportedDrivers))
+                        ->ifNotInArray(self::$supportedDrivers)
+                        ->thenInvalid('The driver %s is not supported. Please choose one of '.json_encode(self::$supportedDrivers))
                     ->end()
                     ->cannotBeOverwritten()
                     ->isRequired()
@@ -70,6 +69,7 @@ class Configuration implements ConfigurationInterface
                 ->useAttributeAsKey('name')
                 ->prototype('array')
                 ->children()
+                    ->booleanNode('is_default')->defaultFalse()->end()
                     ->arrayNode('handler')
                     ->canBeUnset()
                         ->children()
@@ -98,7 +98,21 @@ class Configuration implements ConfigurationInterface
                 ->ifTrue(function($v){return  (count($v) < 1);})
                 ->thenInvalid('You need to specify at least one role.')
             ->end()
+            ->validate()
+                ->ifTrue(function($v){return  $this->hasOnlyOneDefault($v);})
+                ->thenInvalid('Multiple `is_default` defined.')
+            ->end()
         ->end()
         ;
+    }
+
+    private function hasOnlyOneDefault($roles)
+    {
+        $counter = 0;
+        foreach($roles as $role) {
+            $counter += (isset($role['is_default']) && $role['is_default'])?1:0;
+        }
+
+        return ($counter > 1);
     }
 }
