@@ -4,12 +4,13 @@ namespace Leaphly\CartBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use FOS\RestBundle\View\RedirectView;
 use FOS\RestBundle\View\RouteRedirectView;
 use FOS\RestBundle\View\View;
 use Leaphly\CartBundle\Model\CartInterface;
 use Leaphly\CartBundle\Handler\CartHandlerInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use FOS\RestBundle\Util\Codes;
 
 /**
  * BaseController adds some helpers to FOSRestController

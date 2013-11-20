@@ -100,6 +100,42 @@ class LeaphlyCartExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertHasDefinition('godfather.limited');
     }
 
+    /**
+     *  @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     */
+    public function testExpectedExceptionWhenMultipleDefaultRole()
+    {
+        $roleName = 'full';
+        $config = $this->getFullConfig();
+        $config['roles']['full']['is_default'] = true;
+        $config['roles']['limited']['is_default'] = true;
+        $this->createConfiguration($config);
+    }
+
+
+    public function testSetDefaultRole()
+    {
+        $cartHandlerId = 'leaphly_cart.cart.handler';
+
+        $config = $this->getFullConfig();
+        $config['roles']['limited']['is_default'] = true;
+        $this->createConfiguration($config);
+
+        $this->assertAlias('leaphly_cart.cart.limited.handler', $cartHandlerId);
+    }
+
+    public function testIsDefaultRole()
+    {
+        $cartHandlerId = 'leaphly_cart.cart.handler';
+
+        $config = $this->getFullConfig();
+        $config['roles']['full']['is_default'] = true;
+        $config['roles']['limited']['is_default'] = false;
+        $this->createConfiguration($config);
+
+        $this->assertAlias('leaphly_cart.cart.full.handler', $cartHandlerId);
+    }
+
     public function testAllExplicitRoles()
     {
         $roleName = 'full';
@@ -251,8 +287,8 @@ roles:
        form: cart.limited_form
        fallback_strategy: fallback.item_handler
        handler:
-            cart: cart.full_form
-            item: cart.full_form
+            cart: cart.limited_form
+            item: cart.limited_form
 EOF;
         $parser = new Parser();
 
