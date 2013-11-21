@@ -2,12 +2,12 @@
 
 namespace Leaphly\CartBundle\Tests;
 
-use Leaphly\CartBundle\Model\Cart;
+use Leaphly\Cart\Model\Cart;
 
 /**
  *
  * @author Giulio De Donato <liuggio@gmail.com>
- * @package Leaphly\CartBundle\Tests
+ * @package Leaphly\Cart\Tests
  */
 class TestCart extends Cart
 {

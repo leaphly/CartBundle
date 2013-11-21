@@ -6,12 +6,12 @@
     <body>
         <div>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                {{ 'layout.logged_in_as'|trans({'%identifier%': app.cart.identifier}, 'LeaphlyCartBundle') }} |
+                {{ 'layout.logged_in_as'|trans({'%identifier%': app.cart.identifier}, 'LeaphlyCart') }} |
                 <a href="{{ path('leaphly_cart_security_logout') }}">
-                    {{ 'layout.logout'|trans({}, 'LeaphlyCartBundle') }}
+                    {{ 'layout.logout'|trans({}, 'LeaphlyCart') }}
                 </a>
             {% else %}
-                <a href="{{ path('leaphly_cart_security_login') }}">{{ 'layout.login'|trans({}, 'LeaphlyCartBundle') }}</a>
+                <a href="{{ path('leaphly_cart_security_login') }}">{{ 'layout.login'|trans({}, 'LeaphlyCart') }}</a>
             {% endif %}
         </div>
 

@@ -5,7 +5,7 @@
         http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
 
-    <class name="Leaphly\CartBundle\Model\Item">
+    <class name="Leaphly\Cart\Model\Item">
         <property name="name">
             <constraint name="Length">
                 <option name="min">2</option>
@@ -16,7 +16,7 @@
         </property>
     </class>
 
-    <class name="Leaphly\CartBundle\Model\Cart">
+    <class name="Leaphly\Cart\Model\Cart">
 
         <property name="expiresAt">
             <constraint name="DateTime">

@@ -7,8 +7,8 @@
     <parameters>
         <parameter key="leaphly_cart.cart.controller.class">Leaphly\CartBundle\Controller\CartsController</parameter>
         <parameter key="leaphly_cart.item.controller.class">Leaphly\CartBundle\Controller\CartItemsController</parameter>
-        <parameter key="leaphly_cart.item.handler.class">Leaphly\CartBundle\Handler\CartItemHandler</parameter>
-        <parameter key="leaphly_cart.cart.handler.class">Leaphly\CartBundle\Handler\CartHandler</parameter>
+        <parameter key="leaphly_cart.item.handler.class">Leaphly\Cart\Handler\CartItemHandler</parameter>
+        <parameter key="leaphly_cart.cart.handler.class">Leaphly\Cart\Handler\CartHandler</parameter>
     </parameters>
 
 </container>

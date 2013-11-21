@@ -5,7 +5,7 @@ namespace Leaphly\CartBundle\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Leaphly\CartBundle\Exception\InvalidFormException;
+use Leaphly\Cart\Exception\InvalidFormException;
 
 /**
  * RESTful controller managing Cart CRUD
@@ -61,7 +61,7 @@ class CartsController extends BaseController
         $this->cartHandler->deleteCart($cart);
 
             $view = $this->view(array(), 204)
-                ->setTemplate("LeaphlyShoppingCartBundle:Carts:deleteCart.html.twig");
+                ->setTemplate("LeaphlyShoppingCart:Carts:deleteCart.html.twig");
         } catch (BadRequestHttpException $ex) {
 
             $view = $this->view($cart, $ex->getCode())

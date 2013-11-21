@@ -4,7 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                   http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <mapped-superclass name="Leaphly\CartBundle\Model\Item" >
+    <mapped-superclass name="Leaphly\Cart\Model\Item" >
 
         <id name="id" type="guid">
             <generator strategy="UUID" />

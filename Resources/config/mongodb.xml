@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="leaphly_cart.cart_manager.default" class="Leaphly\CartBundle\Doctrine\CartManager" public="false">
+        <service id="leaphly_cart.cart_manager.default" class="Leaphly\Cart\Doctrine\CartManager" public="false">
             <argument type="service" id="leaphly_cart.document_manager" />
             <argument>%leaphly_cart.model.cart.class%</argument>
         </service>

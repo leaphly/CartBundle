@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping>
 
-    <mapped-superclass name="Leaphly\CartBundle\Model\Cart" indexed="true">
+    <mapped-superclass name="Leaphly\Cart\Model\Cart" indexed="true">
 
         <field name="identifier" fieldName="identifier" type="string" indexed="true" />
         <field name="identifierCanonical" fieldName="identifierCanonical" type="string" indexed="true" />

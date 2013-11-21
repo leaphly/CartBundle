@@ -6,8 +6,8 @@
 
 
     <parameters>
-        <parameter key="leaphly_cart.cart.event_factory.class">Leaphly\CartBundle\Event\CartEventFactory</parameter>
-        <parameter key="leaphly_cart.cart_item.event_factory.class">Leaphly\CartBundle\Event\ItemEventFactory</parameter>
+        <parameter key="leaphly_cart.cart.event_factory.class">Leaphly\Cart\Event\CartEventFactory</parameter>
+        <parameter key="leaphly_cart.cart_item.event_factory.class">Leaphly\Cart\Event\ItemEventFactory</parameter>
     </parameters>
 
     <services>

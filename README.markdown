@@ -54,3 +54,14 @@ to allow developers of the bundle to reproduce the issue by simply cloning it
 and following some steps.
 
 
+TODO
+-----------------------
+
+- Complete the Rest controllers.
+
+- Better usage of the finite transitions.
+
+- Decouple Bundle and library.
+
+- Add more DB drivers
+

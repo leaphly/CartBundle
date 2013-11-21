@@ -5,8 +5,8 @@ namespace Leaphly\CartBundle\Controller;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Leaphly\CartBundle\Exception\InvalidFormException;
-use Leaphly\CartBundle\Handler\CartItemHandlerInterface;
+use Leaphly\Cart\Exception\InvalidFormException;
+use Leaphly\Cart\Handler\CartItemHandlerInterface;
 
 /**
  * REST controller managing Item CRUD

@@ -51,19 +51,19 @@ class LeaphlyCartExtension extends Extension
         if ($config['use_price_listener']) {
             $container->getDefinition('leaphly_cart.listener.price_calculator')->addTag(
                 'kernel.event_listener',
-                array('method' => 'calculatePrice', 'event'=>\Leaphly\CartBundle\LeaphlyCartEvents::CART_CREATE_SUCCESS)
+                array('method' => 'calculatePrice', 'event'=>\Leaphly\Cart\LeaphlyCartEvents::CART_CREATE_SUCCESS)
             );
             $container->getDefinition('leaphly_cart.listener.price_calculator')->addTag(
                 'kernel.event_listener',
-                array('method' => 'calculatePrice', 'event'=>\Leaphly\CartBundle\LeaphlyCartEvents::CART_EDIT_SUCCESS)
+                array('method' => 'calculatePrice', 'event'=>\Leaphly\Cart\LeaphlyCartEvents::CART_EDIT_SUCCESS)
             );
             $container->getDefinition('leaphly_cart.listener.price_calculator')->addTag(
                 'kernel.event_listener',
-                array('method' => 'calculatePrice', 'event'=>\Leaphly\CartBundle\LeaphlyCartEvents::ITEM_CREATE_SUCCESS)
+                array('method' => 'calculatePrice', 'event'=>\Leaphly\Cart\LeaphlyCartEvents::ITEM_CREATE_SUCCESS)
             );
             $container->getDefinition('leaphly_cart.listener.price_calculator')->addTag(
                 'kernel.event_listener',
-                array('method' => 'calculatePrice', 'event'=>\Leaphly\CartBundle\LeaphlyCartEvents::ITEM_DELETE_COMPLETED)
+                array('method' => 'calculatePrice', 'event'=>\Leaphly\Cart\LeaphlyCartEvents::ITEM_DELETE_COMPLETED)
             );
         }
     }

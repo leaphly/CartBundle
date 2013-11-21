@@ -4,7 +4,7 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <mapped-superclass name="Leaphly\CartBundle\Model\Cart" collection="leaphly_cart_cart">
+    <mapped-superclass name="Leaphly\Cart\Model\Cart" collection="leaphly_cart_cart">
 
         <field name="identifier" fieldName="identifier" type="string" />
 

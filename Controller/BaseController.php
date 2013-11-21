@@ -8,8 +8,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use FOS\RestBundle\View\RedirectView;
 use FOS\RestBundle\View\RouteRedirectView;
 use FOS\RestBundle\View\View;
-use Leaphly\CartBundle\Model\CartInterface;
-use Leaphly\CartBundle\Handler\CartHandlerInterface;
+use Leaphly\Cart\Model\CartInterface;
+use Leaphly\Cart\Handler\CartHandlerInterface;
 use FOS\RestBundle\Util\Codes;
 
 /**
