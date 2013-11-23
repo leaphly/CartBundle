@@ -1,0 +1,15 @@
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">{{ 'cart.new.headline'|trans({}, 'AcmeDemoBundle') }}</h1>
+
+    {%  if (form is defined) %}
+        <form action="{{ url('post_carts') }}" method="POST" {{ form_enctype(form) }}>
+
+            {{ form_widget(form) }}
+
+            <input type="submit" value="{% trans from 'AcmeDemoBundle' %}cart.new.submit{% endtrans %}">
+        </form>
+    {% endif %}
+
+{% endblock %}

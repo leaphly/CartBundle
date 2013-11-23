@@ -4,199 +4,210 @@ namespace Leaphly\CartBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use FOS\RestBundle\Util\Codes;
+use FOS\RestBundle\View\View;
+
 use Leaphly\Cart\Exception\InvalidFormException;
+use Symfony\Component\HttpFoundation\Request;
+
+use FOS\RestBundle\Controller\Annotations;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
- * RESTful controller managing Cart CRUD
+ * REST controller managing Cart CRUD
  *
  * @author Giulio De Donato <liuggio@gmail.com>
  */
 class CartsController extends BaseController
 {
     /**
-     * This Action get the cart.
+     * Get a single cart.
      *
      * @ApiDoc(
-     *  resource=true,
-     *  description="Get a cart"
+     *   resource = true,
+     *   output = "Acme\Cart\Model\CartInterface",
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "Returned when the cart is not found"
+     *   }
      * )
-     *
      * @api
+     * @Annotations\View(templateVar="cart")
      *
-     * @param $cart_id
+     * @param Request $request the request object
+     * @param int     $cart_id the cart id
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return array
+     *
+     * @throws NotFoundHttpException when cart not exist
      */
-    public function getCartAction($cart_id)
+    public function getCartAction(Request $request, $cart_id)
     {
         $cart = $this->fetchCartOr404($cart_id);
 
-        $view = $this->view($cart, 200)
-            ->setTemplate("LeaphlyCartBundle:Carts:getCart.html.twig")
-            ->setTemplateVar('cart');
-
-        return $view;
+        return $cart;
     }
 
     /**
-     * Delete a cart.
+     * Removes a cart.
      *
      * @ApiDoc(
-     *  resource=true
+     *   resource = true,
+     *   statusCodes={
+     *     204="Returned when successful",
+     *     400="Returned when request is a bad request",
+     *     404="Returned when the cart is not found"
+     *   }
      * )
      *
      * @api
+     * @Annotations\View(statusCode = Codes::HTTP_NO_CONTENT)
      *
-     * @param $cart_id
+     * @param Request $request the request object
+     * @param int     $cart_id the cart id
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return array|View
+     *
+     * @throws NotFoundHttpException when cart not exist
      */
-    public function deleteCartAction($cart_id)
+    public function deleteCartAction(Request $request, $cart_id)
     {
         $cart = $this->fetchCartOr404($cart_id);
 
         try {
-            
-        $this->cartHandler->deleteCart($cart);
-
-            $view = $this->view(array(), 204)
-                ->setTemplate("LeaphlyShoppingCart:Carts:deleteCart.html.twig");
+            $this->cartHandler->deleteCart($cart);
         } catch (BadRequestHttpException $ex) {
 
-            $view = $this->view($cart, $ex->getCode())
+            return $this->view($cart, $ex->getCode())
                 ->setTemplate("LeaphlyCartBundle:Carts:getCart.html.twig")
                 ->setTemplateVar('cart');
         }
 
-        return $view;
+        return array();
     }
 
     /**
-     * Create a Cart.
+     * Create a new cart from the submitted data.
      *
      * @ApiDoc(
-     *  resource=true
+     *   resource = true,
+     *   input = "Leaphly\Cart\Form\Type\CartFormType",
+     *   statusCodes = {
+     *     201 = "Returned when successful created",
+     *     400 = "Returned when the form has errors"
+     *   }
      * )
      *
-     * @api
+     * @Annotations\View(
+     *   template = "AcmeCartBundle:Cart:newCart.html.twig",
+     *   statusCode = Codes::HTTP_BAD_REQUEST
+     * )
      *
-     * @return Response
+     * @param Request $request the request object
+     *
+     * @return FormTypeInterface[]|RouteRedirectView
      */
-    public function postCartAction()
+    public function postCartAction(Request $request)
     {
         try {
-            $newCart = $this->cartHandler->postCart(
-                $this->container->get('request')->request->all()
-            );
-
-            $headers = array(
-                'Location' => $this->container->get('router')->generate(
-                    'api_1_get_cart', array(
-                        'cart_id' => $newCart->getId(),
-                        '_format' => $this->container->get('request')->get('_format')
-                    ), true
-                )
-            );
-
-            return $this->view($newCart, 201, $headers)
-                ->setTemplate("LeaphlyCartBundle:Carts:getCart.html.twig")
-                ->setTemplateVar('cart');
-
+            $cart = $this->cartHandler->postCart($request->request->all());
         } catch (InvalidFormException $exception) {
 
-            return $this->view(array('errors' => $exception->getData()), 422);
+            return array('form' => $exception->getForm());
         }
+
+        $routeOptions = array(
+            'cart_id' => $cart->getId(),
+            '_format' =>  $request->get('_format')
+        );
+
+        return $this->routeRedirectView('api_1_get_cart', $routeOptions, Codes::HTTP_CREATED);
     }
 
     /**
-     * Edit a Cart
+     * Update existing cart from the submitted data or create a new cart at a specific location.
      *
      * @ApiDoc(
-     *  resource=true
+     *   resource = true,
+     *   input = "Leaphly\Cart\Form\Type\CartFormType",
+     *   statusCodes = {
+     *     201 = "Returned when creates a new cart",
+     *     204 = "Returned when successful",
+     *     400 = "Returned when the form has errors",
+     *   }
      * )
      *
-     * @api
+     * @Annotations\View(
+     *   template="AcmeDemoBundle:Cart:editCart.html.twig",
+     *   statusCode = Codes::HTTP_BAD_REQUEST
+     * )
      *
-     * @param $cart_id
+     * @param Request $request the request object
+     * @param int     $cart_id the cart id
      *
-     * @return Response
+     * @return FormTypeInterface[]|RouteRedirectView
      */
-    public function putCartAction($cart_id)
+    public function putCartAction(Request $request, $cart_id)
     {
-        $cart = $this->fetchCartOr404($cart_id);
+        try {
+            if (!($cart = $this->cartHandler->getCart($cart_id))) {
+                $cart = $this->cartHandler->postCart($request->request->all());
+                $statusCode = Codes::HTTP_CREATED;
+            } else {
+                $cart = $this->cartHandler->putCart($cart, $request->request->all());
+                $statusCode = Codes::HTTP_NO_CONTENT;
+            }
+        } catch (InvalidFormException $exception) {
 
-        $headers = array(
-            'Location' => $this->container->get('router')->generate(
-                'api_1_get_cart', array(
-                    'cart_id' => $cart->getId(),
-                    '_format' => $this->container->get('request')->get('_format')
-                ), true
-            )
+            return array('form' => $exception->getForm());
+        }
+
+        $routeOptions = array(
+            'cart_id' => $cart->getId(),
+            '_format' =>  $request->get('_format')
         );
 
-        try {
-            $newCart = $this->cartHandler->putCart(
-                $cart, $this->container->get('request')->request->all()
-            );
-
-            return $this->view($newCart, 200, $headers);
-
-        } catch (InvalidFormException $exception){
-
-            return $this->view(array('errors' => $exception->getData()), 422, $headers);
-        } catch (BadRequestHttpException $ex) {
-
-            return $this->view($cart, $ex->getCode())
-                ->setTemplate("LeaphlyCartBundle:Carts:getCart.html.twig")
-                ->setTemplateVar('cart');
-        }
+        return $this->routeRedirectView('api_1_get_cart', $routeOptions, $statusCode);
     }
 
     /**
-     * Edit a Cart
+     * Partially Update existing cart from the submitted data or create a new cart at a specific location.
      *
      * @ApiDoc(
-     *  resource=true
+     *   resource = true,
+     *   input = "Leaphly\Cart\Form\Type\CartFormType",
+     *   statusCodes = {
+     *     204 = "Returned when successful",
+     *     400 = "Returned when the form has errors",
+     *   }
      * )
      *
-     * @api
+     * @Annotations\View(
+     *   template="AcmeDemoBundle:Cart:editCart.html.twig",
+     *   statusCode = Codes::HTTP_BAD_REQUEST
+     * )
      *
-     * @param $cart_id
+     * @param Request $request the request object
+     * @param int     $cart_id the cart id
      *
-     * @return Response
+     * @return FormTypeInterface[]|RouteRedirectView
      */
-    public function patchCartAction($cart_id)
+    public function patchCartAction(Request $request, $cart_id)
     {
         $cart = $this->fetchCartOr404($cart_id);
 
-        $headers = array(
-            'Location' => $this->container->get('router')->generate(
-                'api_1_get_cart', array(
-                    'cart_id' => $cart->getId(),
-                    '_format' => $this->container->get('request')->get('_format')
-                ), true
-            )
+        try {
+            $this->cartHandler->patchCart($cart, $request->request->all());
+        } catch (InvalidFormException $exception) {
+
+            return array('form' => $exception->getForm());
+        }
+
+        $routeOptions = array(
+            'cart_id' => $cart->getId(),
+            '_format' =>  $request->get('_format')
         );
 
-        try {
-            $newCart = $this->cartHandler->patchCart(
-                $cart, $this->container->get('request')->request->all()
-            );
-
-            return $this->view($newCart, 200, $headers)
-                ->setTemplate("LeaphlyCartBundle:Carts:getCart.html.twig")
-                ->setTemplateVar('cart');
-
-        } catch (InvalidFormException $exception){
-
-            return $this->view(array('errors' => $exception->getData()), 422, $headers);
-
-        } catch (BadRequestHttpException $ex) {
-
-            return $this->view($cart, $ex->getCode())
-                ->setTemplate("LeaphlyCartBundle:Carts:getCart.html.twig")
-                ->setTemplateVar('cart');
-        }
+        return $this->routeRedirectView('api_1_get_cart', $routeOptions, Codes::HTTP_NO_CONTENT);
     }
 }

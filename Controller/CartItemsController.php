@@ -56,7 +56,7 @@ class CartItemsController extends BaseController
 
         } catch (InvalidFormException $exception){
 
-            return $this->view(array('errors' => $exception->getData()), 422, $headers);
+            return $this->view(array('errors' => $exception->getForm()), 422, $headers);
 
         } catch (BadRequestHttpException $ex) {
 
@@ -110,7 +110,7 @@ class CartItemsController extends BaseController
 
         } catch (InvalidFormException $exception){
 
-            return $this->view(array('errors' => $exception->getData()), 422);
+            return $this->view(array('errors' => $exception->getForm()), 422);
 
         } catch (BadRequestHttpException $ex) {
 
