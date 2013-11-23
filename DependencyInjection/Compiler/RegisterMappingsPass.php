@@ -83,13 +83,4 @@ class RegisterMappingsPass implements CompilerPassInterface
 
         return new RegisterMappingsPass($driver, 'doctrine_mongodb.odm.%s_metadata_driver', $mappings, 'leaphly_cart.backend_type_mongodb', 'doctrine_mongodb.odm.default_document_manager');
     }
-
-    public static function createCouchDBMappingDriver($mappings)
-    {
-        $arguments = array($mappings, '.couchdb.xml');
-        $locator = new Definition('Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator', $arguments);
-        $driver = new Definition('Doctrine\ODM\CouchDB\Mapping\Driver\XmlDriver', array($locator));
-
-        return new RegisterMappingsPass($driver, 'doctrine_couchdb.odm.%s_metadata_driver', $mappings, 'leaphly_cart.backend_type_couchdb', 'doctrine_couchdb.default_document_manager');
-    }
 }
