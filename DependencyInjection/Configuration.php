@@ -99,20 +99,17 @@ class Configuration implements ConfigurationInterface
                 ->thenInvalid('You need to specify at least one role.')
             ->end()
             ->validate()
-                ->ifTrue(function($v){return $this->hasOnlyOneDefault($v);})
+                ->ifTrue(function($roles) {
+                    $counter = 0;
+                    foreach($roles as $role) {
+                        $counter += (isset($role['is_default']) && $role['is_default'])? 1 : 0;
+                    }
+
+                    return ($counter > 1);
+                })
                 ->thenInvalid('Multiple `is_default` defined.')
             ->end()
         ->end()
         ;
-    }
-
-    private function hasOnlyOneDefault($roles)
-    {
-        $counter = 0;
-        foreach($roles as $role) {
-            $counter += (isset($role['is_default']) && $role['is_default'])?1:0;
-        }
-
-        return ($counter > 1);
     }
 }
