@@ -93,12 +93,12 @@ abstract class BaseController extends ContainerAware
      * Create the Response.
      *
      * @param CartInterface $cart
-     * @param int $statusCode
-     * @param string $getCartRoute
+     * @param int           $statusCode
+     * @param string        $getCartRoute
      *
      * @return \FOS\RestBundle\View\View
      */
-    protected  function createResponse(CartInterface $cart, $statusCode = 204, $getCartRoute = 'api_1_get_cart')
+    protected function createResponse(CartInterface $cart, $statusCode = 204, $getCartRoute = 'api_1_get_cart')
     {
         $headers = array();
 

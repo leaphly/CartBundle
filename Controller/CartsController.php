@@ -2,7 +2,6 @@
 
 namespace Leaphly\CartBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View;
@@ -77,7 +76,6 @@ class CartsController extends BaseController
         try {
             $this->cartHandler->deleteCart($cart);
         } catch (BadRequestHttpException $ex) {
-
             return $this->view($cart, $ex->getCode())
                 ->setTemplate("LeaphlyCartBundle:Carts:getCart.html.twig")
                 ->setTemplateVar('cart');
@@ -112,7 +110,6 @@ class CartsController extends BaseController
         try {
             $cart = $this->cartHandler->postCart($request->request->all());
         } catch (InvalidFormException $exception) {
-
             return array('form' => $exception->getForm());
         }
 
@@ -158,7 +155,6 @@ class CartsController extends BaseController
                 $statusCode = Codes::HTTP_NO_CONTENT;
             }
         } catch (InvalidFormException $exception) {
-
             return array('form' => $exception->getForm());
         }
 
@@ -199,7 +195,6 @@ class CartsController extends BaseController
         try {
             $this->cartHandler->patchCart($cart, $request->request->all());
         } catch (InvalidFormException $exception) {
-
             return array('form' => $exception->getForm());
         }
 

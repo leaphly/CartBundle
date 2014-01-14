@@ -59,7 +59,6 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-
     private function addRoles(ArrayNodeDefinition $node)
     {
         $node
@@ -88,20 +87,20 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('fallback_strategy')->end()
                 ->end()
                 ->validate()
-                    ->ifTrue(function($v){return !isset($v['form']) && !isset($v['handler']['cart']);})
+                    ->ifTrue(function ($v) {return !isset($v['form']) && !isset($v['handler']['cart']);})
                     ->thenInvalid('You need to specify or the form or the cart handler.')
                 ->end()
             ->end()
             ->isRequired()
             ->cannotBeEmpty()
             ->validate()
-                ->ifTrue(function($v){return (count($v) < 1);})
+                ->ifTrue(function ($v) {return (count($v) < 1);})
                 ->thenInvalid('You need to specify at least one role.')
             ->end()
             ->validate()
-                ->ifTrue(function($roles) {
+                ->ifTrue(function ($roles) {
                     $counter = 0;
-                    foreach($roles as $role) {
+                    foreach ($roles as $role) {
                         $counter += (isset($role['is_default']) && $role['is_default'])? 1 : 0;
                     }
 

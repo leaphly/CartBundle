@@ -55,7 +55,6 @@ class LeaphlyCartExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertParameter('Acme\MyBundle\Entity\Cart', 'leaphly_cart.model.cart.class');
     }
 
-
     public function testDefaultCartTransitionWithAlias()
     {
         $this->createFullConfiguration();
@@ -111,7 +110,6 @@ class LeaphlyCartExtensionTest extends \PHPUnit_Framework_TestCase
         $config['roles']['limited']['is_default'] = true;
         $this->createConfiguration($config);
     }
-
 
     public function testSetDefaultRole()
     {
@@ -309,6 +307,7 @@ roles:
        strategy: godfather.limited
 EOF;
         $parser = new Parser();
+
         return $parser->parse($yaml);
     }
 
@@ -330,6 +329,7 @@ roles:
             item: full.controller.item
 EOF;
         $parser = new Parser();
+
         return $parser->parse($yaml);
     }
 

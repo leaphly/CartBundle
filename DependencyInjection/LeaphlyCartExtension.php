@@ -78,7 +78,6 @@ class LeaphlyCartExtension extends Extension
         $defaultCartHandler = 'leaphly_cart.cart.handler';
         $defaultCartItemHandler = 'leaphly_cart.cart_item.handler';
 
-
         if (isset($config['roles'])) {
             foreach ($config['roles'] as $roleName => $role) {
 
@@ -89,11 +88,10 @@ class LeaphlyCartExtension extends Extension
                 $controllerCartItemId =sprintf('leaphly_cart.cart_item.%s.controller', $roleName);
 
                 // if the handler is not defined explicitally, register the cart.handler
-                if (isset($role['form']) && !isset($role['handler']['cart']))
-                {
+                if (isset($role['form']) && !isset($role['handler']['cart'])) {
                     $this->registerFormFactory($container, $formFactoryName, $cartFormFactoryHandlerClass, '%leaphly_cart.cart.form.name%',  $role['form']);
                     $this->registerCartHandler($container, $cartHandlerId, $cartHandlerClass, $formFactoryName);
-                } else if (isset($role['handler']['cart'])) {
+                } elseif (isset($role['handler']['cart'])) {
                     $container->setAlias($cartHandlerId, $role['handler']['cart']);
                 }
 
@@ -116,7 +114,7 @@ class LeaphlyCartExtension extends Extension
 
                 if (isset($role['form']) && !isset($role['handler']['item'])) {
                     $this->registerCartItemHandler($container, $cartItemHandlerId, $itemHandlerClass, $strategy);
-                } else if (isset($role['handler']['item'])) {
+                } elseif (isset($role['handler']['item'])) {
                     $container->setAlias($cartItemHandlerId, $role['handler']['item']);
                 }
 
@@ -228,30 +226,27 @@ class LeaphlyCartExtension extends Extension
         );
     }
 
-
     private function defineGodfatherConfiguration($config, ContainerBuilder $container)
     {
-        $itemInterface = 'Leaphly\CartBundle\Handler\ItemHandlerInterface';
-        $gfConfiguration = array();
+        $godfatherConfiguration = array();
 
         foreach ($config['roles'] as $roleName => $role) {
             $roleStrategy = array(
                 'contexts' => array(
-                    'handler' => array(
-                        'interface' => $itemInterface
-                    )
+                    'item_handler' => array(
+                    ),
                 )
             );
 
             if (isset($role['fallback_strategy'])) {
                 $roleStrategy['contexts']['handler']['fallback'] = $role['fallback_strategy'];
             }
-            $gfConfiguration['godfather'][$roleName] = $roleStrategy;
+            $godfatherConfiguration['godfather'][$roleName] = $roleStrategy;
         }
-        $strategy = new GodfatherExtension();
-        $strategy->load($gfConfiguration, $container);
-    }
 
+        $strategy = new GodfatherExtension();
+        $strategy->load($godfatherConfiguration, $container);
+    }
 
     private function loadFormType(ContainerBuilder $container, XmlFileLoader $loader, $config)
     {

@@ -43,7 +43,7 @@ class CartItemsController extends BaseController
             true)
         );
 
-        try{
+        try {
             $this->itemHandler
                 ->postItem(
                     $cart,
@@ -54,8 +54,7 @@ class CartItemsController extends BaseController
                 ->setTemplate("LeaphlyCartBundle:Carts:getCart.html.twig")
                 ->setTemplateVar('cart');
 
-        } catch (InvalidFormException $exception){
-
+        } catch (InvalidFormException $exception) {
             return $this->view(array('errors' => $exception->getForm()), 422, $headers);
 
         } catch (BadRequestHttpException $ex) {
@@ -96,7 +95,7 @@ class CartItemsController extends BaseController
             )
         );
 
-        try{
+        try {
             $cart = $this->itemHandler
                 ->patchItem(
                     $cart,
@@ -108,8 +107,7 @@ class CartItemsController extends BaseController
                 ->setTemplate("LeaphlyCartBundle:Carts:getCart.html.twig")
                 ->setTemplateVar('cart');
 
-        } catch (InvalidFormException $exception){
-
+        } catch (InvalidFormException $exception) {
             return $this->view(array('errors' => $exception->getForm()), 422);
 
         } catch (BadRequestHttpException $ex) {
@@ -122,8 +120,6 @@ class CartItemsController extends BaseController
 
         return $view;
     }
-
-
 
     /**
      * Delete Item.
@@ -167,7 +163,6 @@ class CartItemsController extends BaseController
 
         return $view;
     } // "delete_cart_item" [DELETE] /carts/{cart_id}/items/{item_id}
-
 
     /**
      * Delete all Items.
