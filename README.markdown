@@ -3,10 +3,8 @@ CartBundle
 
 [![Build Status](https://secure.travis-ci.org/leaphly/CartBundle.png?branch=master)](http://travis-ci.org/leaphly/CartBundle) [![Total Downloads](https://poser.pugx.org/leaphly/cart-bundle/downloads.png)](https://packagist.org/packages/leaphly/cart-bundle) [![Latest Stable Version](https://poser.pugx.org/leaphly/cart-bundle/v/stable.png)](https://packagist.org/packages/leaphly/cart-bundle)
 
-
 Mission-statement
 ----------
-
 
 The Leaphly project makes it easier for developers to add cart functionality to the Symfony2 applications or to those applications that could consume REST API.
 
@@ -34,7 +32,7 @@ composer.phar create-project leaphly/cart-bundle`
 vendor/bin/phpunit
 ```
 
-All the Functional testing are into the [leaphly-sandbox](https://github.com/leaphly/leaphly-sandbox).
+All the Functional tests are into the [leaphly-sandbox](https://github.com/leaphly/leaphly-sandbox).
 
 About
 -----
@@ -57,11 +55,11 @@ and following some steps.
 TODO
 -----------------------
 
-- Complete the Rest controllers.
+- ~Complete the Rest controllers.~
 
-- Better usage of the finite transitions.
+- ~Better usage of the finite transitions.~
 
-- Decouple Bundle and library.
+- ~Decouple Bundle and library.~
 
 - Add more DB drivers
 

@@ -18,9 +18,9 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.2",
-        "symfony/framework-bundle": "~2.1",
-        "jms/serializer-bundle": "dev-master",
-        "leaphly/cart":"dev-master"
+        "symfony/framework-bundle": "~2",
+        "jms/serializer-bundle": "~0",
+        "leaphly/cart":"0.1.x-dev"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "dev-master",
